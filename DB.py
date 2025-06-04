@@ -18,7 +18,7 @@ lock = threading.Lock()
 db = SQLAlchemy()
 
 # 데이터베이스 연결
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bgm:0501@localhost/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://*****@@'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

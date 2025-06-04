@@ -71,39 +71,7 @@ class Game3(db.Model):
     label_3 = db.Column(db.Float)
     evaluation_3 = db.Column(db.Float)
 
-
 # #아래는 json파일에서 사용자 데이터를 읽어와서 데이터베이스에 저장.
-# def load_user_data(file_path='users.json'):
-#     # 파일이 존재하는지 확인합니다.
-#     if not os.path.exists(file_path):
-#         print(f"File {file_path} does not exist. Skipping data load.")
-#         return    
-    
-#     try:
-#         # 파일에서 사용자 정보를 읽어옵니다.
-#         with open(file_path, 'r', encoding='utf-8') as file:
-#             client = json.load(file)
-#         # 읽어온 사용자 정보를 데이터베이스에 저장합니다.
-#         with app.app_context():
-#             for clients in client:
-#             # 사용자 정보에서 사용자 이름을 가져옵니다.
-#                 name = clients.get('username')
-#                 user_id = clients.get('id')
-#             # 이미 데이터베이스에 존재하는 사용자인지 확인합니다.
-#                 existing_user = client_info.query.filter_by(client_name=name).first()
-#             # 데이터베이스에 존재하지 않는 경우에만 추가합니다.
-#                 if not existing_user:
-#                 # 새로운 사용자 정보를 데이터베이스에 추가합니다.
-#                     new_user = client_info(client_id=user_id, client_name=name)
-#                     db.session.add(new_user)
-#                     # 변경사항을 저장합니다.
-#             db.session.commit()
-#     except Exception as error:
-#         print(f"An error occurred while loading user data: {error}")
-
-# # load_user_data 함수를 호출하여 데이터를 로드하고 데이터베이스에 저장합니다.
-# load_user_data()
-
 def load_user_data(file_path='users.json'):
     # 데이터베이스 연결 상태 확인
     if not check_db_connection():
@@ -137,60 +105,6 @@ def load_user_data(file_path='users.json'):
     except Exception as error:
         print(f"An error occurred while loading user data: {error}")
 load_user_data()
-
-
-# def load_game1_data(file_path='game1.json'):
-#     try:
-#         with open(file_path, 'r', encoding='utf-8') as file:
-#             logs = json.load(file)
-#     except FileNotFoundError:
-#         print(f"Error: File '{file_path}' not found")
-#         return
-#     except json.JSONDecodeError:
-#         print(f"Error: Invalid JSON format in file '{file_path}'")
-#         return
-    
-#     with app.app_context():
-#         for entry in logs:
-#             id_1 = entry.get('id')
-#             page_1 = entry.get('page')
-#             label_1 = entry.get('label')
-#             x_coordinate_1 = entry.get('x_coordinate')
-#             y_coordinate_1 = entry.get('y_coordinate')
-#             time_1 = datetime.datetime.strptime(entry.get('time'), '%Y-%m-%d %H:%M:%S')
-#             # score_1 = entry.get('score')
-#             evaluation_1 = entry.get('evaluation')
-
-#             # 새로운 로그 정보를 데이터베이스에 추가합니다.
-#             existing_log = Game1.query.filter_by(id_1=id_1, time_1=time_1).first()
-#     #  try:
-#     #             existing_log = Game1.query.filter_by(id_1=id_1, time_1=time_1).first()
-#     #         except Exception as e:
-#     #             print(f"An error occurred while querying Game1 table: {e}")
-#     #             continue  # Skip this entry and proceed with the next one
-            
-#             if not existing_log:
-#                 new_log = Game1(
-#                     id_1=id_1, 
-#                     page_1=page_1, 
-#                     label_1=label_1, 
-#                     x_coordinate_1=x_coordinate_1, 
-#                     y_coordinate_1=y_coordinate_1, 
-#                     time_1=time_1, 
-#                     evaluation_1=evaluation_1
-#                 )
-#                 db.session.add(new_log)
-        
-#         try:
-#             db.session.commit()
-#         except IntegrityError:
-#             db.session.rollback()
-#             print("An error occurred while saving logs to the database. Duplicate entry detected.")
-#         except Exception as e:
-#             db.session.rollback()
-#             print(f"An error occurred while committing to the database: {e}")
-
-# load_game1_data()
 
 # 데이터베이스에 game1 데이터를 로드하는 함수
 def load_game1_data(file_path='game1.json'):
@@ -243,71 +157,6 @@ def load_game1_data(file_path='game1.json'):
             db.session.rollback()
             print(f"An error occurred while committing to the database: {e}")
 load_game1_data()
-
-
-
-# def load_game2_data(file_path='game2.json'):
-#     try:
-#         with open(file_path, 'r') as file:
-#             logs = json.load(file)
-#     except FileNotFoundError:
-#         print(f"Error: File '{file_path}' not found")
-#         return
-#     except json.JSONDecodeError:
-#         print(f"Error: Invalid JSON format in file '{file_path}'")
-#         return
-    
-#     with app.app_context():
-#         for entry in logs:
-#             id_2 = entry.get('id')
-#             page_2 = entry.get('page')
-#             x_coordinate_2 = entry.get('x_coordinate')
-#             y_coordinate_2 = entry.get('y_coordinate')
-#             time_2 = datetime.datetime.strptime(entry.get('time'), '%Y-%m-%d %H:%M:%S')
-#             score_2 = entry.get('score')
-#             stage_2 = entry.get('stage')
-#             evaluation_2 = entry.get('evaluation')
-
-#             # 새로운 로그 정보를 데이터베이스에 추가합니다.
-#             # existing_log = Game2.query.filter_by(id_2=id_2, time_2=time_2).first()
-#             # 새로운 로그 정보를 데이터베이스에 추가합니다.
-#             existing_log = db.session.query(Game2).filter(
-#                 Game2.id_2 == id_2,
-#                 func.cast(Game2.time_2, sqlalchemy.TIMESTAMP) == time_2
-#             ).first()
-
-#             if existing_log is None:
-#                 new_log = Game2(
-#                     id_2=id_2, 
-#                     page_2=page_2, 
-#                     x_coordinate_2=x_coordinate_2, 
-#                     y_coordinate_2=y_coordinate_2, 
-#                     time_2=time_2, 
-#                     score_2=score_2, 
-#                     stage_2=stage_2,
-#                     evaluation_2=evaluation_2
-#                 )
-#                 db.session.add(new_log)
-        
-#         try:
-#             db.session.commit()
-#         except IntegrityError:
-#             db.session.rollback()
-#             print("An error occurred while saving logs to the database. Duplicate entry detected.")
-#             pass
-
-# load_game2_data()
-
-# 데이터베이스에 game2 데이터를 로드하는 함수
-# 데이터베이스 연결 상태 확인 함수
-# def check_db_connection():
-#     try:
-#         with db.engine.connect() as connection:
-#             connection.execute("SELECT 1")  # 예시로 간단한 쿼리를 실행하여 연결 상태 확인
-#     except Exception as e:
-#         print(f"Database connection error: {e}")
-#         return False
-#     return True
 
 # 데이터베이스에 game2 데이터를 로드하는 함수
 def load_game2_data(file_path='game2.json'):

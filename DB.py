@@ -12,8 +12,9 @@ import time
 import json
 import os
 
+#Flask 앱 생성 및 설정
 app = Flask(__name__)
-lock = threading.Lock()
+lock = threading.Lock() # 쓰레드 동기화를 위한 Lock 객체
 
 db = SQLAlchemy()
 
@@ -31,15 +32,19 @@ def check_db_connection():
         print(f"Database connection error: {e}")
         return False
     return True
-
+    
+# 사용자  테이블
 class client_info(db.Model):
     __tablename__ = 'client_info'
     client_id = db.Column(db.Integer, primary_key=True)
     client_name = db.Column(db.String(50), unique=True)
+    
+    # Game1, Game2, Game3 과의 관계 설정
     game1 = db.relationship('Game1', backref='client', lazy=True)
     game2 = db.relationship('Game2', backref='client', lazy=True)
     game3 = db.relationship('Game3', backref='client', lazy=True)
 
+# Game1 기록 테이블
 class Game1(db.Model):
     __tablename__ = 'game1'
     id_1 = db.Column(db.Integer, db.ForeignKey('client_info.client_id'), nullable=False, primary_key=True)
@@ -50,6 +55,7 @@ class Game1(db.Model):
     evaluation_1 = db.Column(db.Float)
     page_1 = db.Column(db.Integer)
 
+# Game2 기록 테이블
 class Game2(db.Model):
     __tablename__ = 'game2'
     id_2 = db.Column(db.Integer, db.ForeignKey('client_info.client_id'), nullable=False, primary_key=True)
@@ -62,6 +68,7 @@ class Game2(db.Model):
     evaluation_2 = db.Column(db.Float)
     page_2 = db.Column(db.Integer)
 
+# Game3 기록 테이블
 class Game3(db.Model):
     __tablename__ = 'game3'
     id_3 = db.Column(db.Integer, db.ForeignKey('client_info.client_id'), nullable=False, primary_key=True)
@@ -215,7 +222,7 @@ def load_game2_data(file_path='game2.json'):
             print(f"An error occurred while committing to the database: {e}")
 load_game2_data()
 
-
+# 파일 변경 이벤트 핸들러
 class MyHandler(FileSystemEventHandler):
     def on_modified_1(self, event):
         if event.src_path.endswith('game1.json'):
@@ -226,9 +233,10 @@ class MyHandler(FileSystemEventHandler):
             print("File modified:", event.src_path)
             load_game2_data(event.src_path)
 
+# 파일 변경 감지를 위한 함수(백그라운드 실행)
 def start_file_monitoring():
     observer = Observer()
-    observer.schedule(MyHandler(), path='.')
+    observer.schedule(MyHandler(), path='.') # 현재 디렉토리 감시
     observer.start()
     try:
         while True:
@@ -242,6 +250,7 @@ thread = threading.Thread(target=start_file_monitoring)
 thread.daemon = True
 thread.start()
 
+# 로그 조건에 따라 기록을 나누는 핸들러
 class ConditionalRotatingFileHandler(RotatingFileHandler):
     def emit(self, record):
         # game1 관련 로그 조건
@@ -258,6 +267,7 @@ file_monitor_thread = threading.Thread(target=start_file_monitoring)
 file_monitor_thread.daemon = True
 file_monitor_thread.start()
 
+# 메인 엔트리
 if __name__ == '__main__':
     print("Starting Flask app...")
     app.run(debug=True)

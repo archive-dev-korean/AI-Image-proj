@@ -1,11 +1,22 @@
 [
   {
+    "id": 1,
+    "time": "2024-06-01 14:30:00",
+    "x_coordinate": 150.0,
+    "y_coordinate": 200.0,
+    "score": 800,
+    "stage": 2,
+    "evaluation": 4.5,
+    "page": 3
+  },
+  {
     "id": 2,
-    "time": "2024-01-01 12:00:00",
-    "x_coordinate": 200.5,
-    "y_coordinate": 300.5,
-    "label": 2,
-    "evaluation": 344,
-    "page": 454
+    "time": "2024-06-01 14:32:00",
+    "x_coordinate": 220.0,
+    "y_coordinate": 180.0,
+    "score": 950,
+    "stage": 3,
+    "evaluation": 4.8,
+    "page": 4
   }
 ]

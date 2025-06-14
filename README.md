@@ -39,7 +39,7 @@
 ## 📂 주요 스크립트 설명
 
  ### 1️⃣ `DB.py`  
-  **전체 데이터베이스 설계 및 JSON → DB 적재를 관리하는 메인 로직**  
+  ***전체 데이터베이스 설계 및 JSON → DB 적재를 관리하는 메인 로직***  
   - Flask + SQLAlchemy를 이용해 PostgreSQL DB 연동
   - 테이블 스키마 정의: `client_info`, `game1`, `game2`, `game3`
   - `client_info.json` → 사용자 정보 삽입
@@ -49,22 +49,22 @@
   - 쓰레드 기반 실시간 파일 감시 기능 탑재
 
 ### 2️⃣`client_info.json`  
-  **사용자 기본 정보 JSON**
+  ***사용자 기본 정보 JSON***
   - 각 사용자 ID 및 닉네임 포함
   - DB의 `client_info` 테이블에 매핑됨
 
 ### 3️⃣`game1.json`  
-  **게임1 기록 데이터**
+  ***게임1 기록 데이터***
   - 각 기록: 시간, 좌표(x, y), 라벨(label), 평가(evaluation), 페이지 정보 포함
   - DB의 `game1` 테이블에 적재됨
 
 ### 4️⃣`game2.json`  
-  **게임2 기록 데이터**
+  ***게임2 기록 데이터***
   - 각 기록: 시간, 좌표(x, y), 스코어(score), 스테이지(stage), 평가(evaluation), 페이지 정보 포함
   - DB의 `game2` 테이블에 적재됨
 
 ### 5️⃣`game3.json` 
-  **게임3 기록 데이터**
+  ***게임3 기록 데이터***
   - 각 기록: 시간, 좌표(x, y), 라벨(label), 평가(evaluation) 포함
   - DB의 `game3` 테이블에 적재됨
 ---
